@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  db:
+    container_name: pg_container
+    image: postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres      
+      - POSTGRES_DB=contablue
+    ports:
+      - '5432:5432'
+  redis:
+    container_name: redis_container
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
+    volumes: 
+      - cachedb:/data
+
+volumes:
+  cachedb:
+    driver: local
